@@ -248,3 +248,4 @@ asn,ip,timestamp,malware,src_port,dst_ip,dst_port,dst_host,proto
 37440,137.115.5.108,24/12/2025 17:03,m0yv,2610,85.214.228.140,80,dlynankz.biz,tcp
 37440,137.115.4.200,24/12/2025 19:01,m0yv,8124,85.214.228.140,80,dlynankz.biz,tcp
 37440,105.234.150.123,24/12/2025 18:44,andromeda,61532,184.105.192.2,80,differentia.ru,tcp
+
