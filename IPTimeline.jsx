@@ -1,23 +1,39 @@
 import React from "react";
+import "./IPTimeline.css";
 
-export default function IPTimeline({ events }) {
+const IPTimeline = ({ events }) => {
   if (!events || events.length === 0) {
-    return <p>No intelligence found for this IP</p>;
+    return (
+      <div className="timeline-empty">
+        No timeline data available
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h3>IP Activity Timeline</h3>
-      {events.map((e, i) => (
-        <div key={i} style={{ borderLeft: "4px solid #C71852", paddingLeft: 12, marginBottom: 20 }}>
-          <p><b>IP:</b> {e.ip}</p>
-          <p><b>ASN:</b> {e.asn}</p>
-          <p><b>Malware:</b> <span style={{ color: "#C71852" }}>{e.malware}</span></p>
-          <p><b>Protocol:</b> {e.proto}</p>
-          <p><b>Dst:</b> {e.dst_ip}:{e.dst_port}</p>
-          <p><b>Time:</b> {new Date(e.timestamp).toLocaleString()}</p>
-        </div>
-      ))}
+    <div className="timeline-container">
+      <h3 className="timeline-title">IP Activity Timeline</h3>
+
+      <ul className="timeline">
+        {events.map((event, index) => (
+          <li key={index} className="timeline-item">
+            <div className="timeline-dot"></div>
+
+            <div className="timeline-content">
+              <p><strong>Timestamp:</strong> {event.timestamp}</p>
+              <p><strong>ASN:</strong> {event.asn}</p>
+              <p><strong>Malware:</strong> {event.malware}</p>
+              <p><strong>Protocol:</strong> {event.proto}</p>
+              <p>
+                <strong>Connection:</strong>{" "}
+                {event.ip}:{event.src_port} → {event.dst_ip}:{event.dst_port}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
+
+export default IPTimeline;
