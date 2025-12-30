@@ -1,12 +1,34 @@
 import React from "react";
 import malwareIntel from "../utils/malwareIntel";
-import "./IPTimeline.css"
-import "../App.css"; // make sure your styles are loaded
+import "../App.css";
+import "./IPTimeline.css"// make sure your styles are loaded
 
 const IPTimeline = ({ events }) => {
   if (!events || events.length === 0) {
     return <p>No intelligence found for this IP yet.</p>;
   }
+
+  // Helper function to parse DD/MM/YYYY HH:MM format
+  const parseTimestamp = (ts) => {
+    if (!ts) return "Unknown timestamp";
+    // Split string into parts
+    const parts = ts.split(/[/ :]/); // ["24","12","2025","11","53"]
+    if (parts.length < 5) return ts; // fallback if format unexpected
+    const dateObj = new Date(
+      parts[2],      // year
+      parts[1] - 1,  // month (0-based)
+      parts[0],      // day
+      parts[3],      // hour
+      parts[4]       // minute
+    );
+    return dateObj.toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
 
   return (
     <ul className="timeline">
@@ -19,7 +41,7 @@ const IPTimeline = ({ events }) => {
           <li key={index} className="timeline-item">
             <div className="timeline-content">
               <p>
-                <strong>Timestamp:</strong> {event.timestamp}
+                <strong>Timestamp:</strong> {parseTimestamp(event.timestamp)}
               </p>
 
               <p>
